@@ -1,14 +1,17 @@
-describe('API test suite', () => {
+import {
+    API_CRUD,
+    API_HEADER,
+  } from "../constants/common";
+
+describe('API Test Suite', () => {
 
     Cypress.config('baseUrl', 'https://jsonplaceholder.typicode.com/posts')
 
     it('Get All Posts',() => {
         cy.request({
-            method: 'GET',
+            method: API_CRUD.GET,
             url: '/',
-            headers: {
-                'Content-Type': 'application/json',
-            },
+            headers: API_HEADER,
             body: {         
             },
             }).then((response) => {
@@ -18,13 +21,12 @@ describe('API test suite', () => {
                 expect(response.body).to.have.length(100);
         });
     });
+
     it('Get a single Post',() => {
         cy.request({
-            method: 'GET',
+            method: API_CRUD.GET,
             url: '/4',
-            headers: {
-                'Content-Type': 'application/json',
-            },
+            headers: API_HEADER,
             body: {         
             },
             }).then((response) => {
@@ -36,13 +38,12 @@ describe('API test suite', () => {
                 expect(response.body).to.have.property('userId');
         });
     });
+
     it('Post a new empty Post',() => {
         cy.request({
-            method: 'POST',
+            method: API_CRUD.POST,
             url: '/',
-            headers: {
-                'Content-Type': 'application/json',
-            },
+            headers: API_HEADER,
             body: {
             },
         }).then((response) => {
@@ -50,13 +51,12 @@ describe('API test suite', () => {
             expect(response.body).to.have.property("id").to.eq(101);
         });
     });
-    it('Verify POST endpoint with id value of 102',() => {
+
+    it('Verify Post endpoint with id value of 102',() => {
         cy.request({
-            method: 'POST',
+            method: API_CRUD.POST,
             url: '/',
-            headers: {
-                'Content-Type': 'application/json',
-            },
+            headers: API_HEADER,
             body: {
                 "id": "102",
             },
@@ -65,15 +65,15 @@ describe('API test suite', () => {
             expect(requestResponse.body).to.have.property("id").to.not.eq(100);
         });
     }); 
+
     it('Post a new Post',() => {
+
         const bodyDescription = "If you're here, you're likely looking to find random words. Random Word Generator is the perfect tool to help you do this. While this tool isn't a word creator, it is a word generator that will generate random words for a variety of activities or uses. Even better, it allows you to adjust the parameters of the random words to best fit your needs. The first option the tool allows you to adjust is the number of random words to be generated."; 
         
         cy.request({
-            method: 'POST',
+            method: API_CRUD.POST,
             url: '/',
-            headers: {
-                'Content-Type': 'application/json',
-            },
+            headers: API_HEADER,
             body: {
                 "id": "100",
                 "title": 'New Post',
@@ -90,13 +90,12 @@ describe('API test suite', () => {
             expect(requestResponse.body.title).to.eq('New Post');
         });
     }); 
+
     it('Put a new Post',() => {
         cy.request({
-            method: 'PUT',
+            method: API_CRUD.PUT,
             url: '/',
-            headers: {
-                'Content-Type': 'application/json',
-            },
+            headers: API_HEADER,
             failOnStatusCode: false,
             body: {
                 "id": "100",
@@ -104,16 +103,14 @@ describe('API test suite', () => {
             },
         }).then((requestResponse) => {
             expect(requestResponse.status).to.not.eq(201);
-
         });
     }); 
+    
     it('Put a single Post',() => {
         cy.request({
-            method: 'PUT',
+            method: API_CRUD.PUT,
             url: '/8',
-            headers: {
-                'Content-Type': 'application/json',
-            },
+            headers: API_HEADER,
             body: {
                 "userId": "5",
                 "title": "Food Blog", 
@@ -123,31 +120,27 @@ describe('API test suite', () => {
             expect(requestResponse.body.id).to.eq(8);
             expect(requestResponse.body).to.have.property('userId', '5');
             expect(requestResponse.body).to.have.property('title', 'Food Blog');
-        
         });
     }); 
+
     it('Put a single empty Post',() => {
         cy.request({
-            method: 'PUT',
+            method: API_CRUD.PUT,
             url: '/10',
-            headers: {
-                'Content-Type': 'application/json',
-            },
+            headers: API_HEADER,
             body: { 
             },
         }).then((requestResponse) => {
             expect(requestResponse.status).to.eq(200);
             expect(requestResponse.body.id).to.eq(10);
-        
         });
     }); 
+
     it('Delete a single Post',() => {
         cy.request({
-            method: 'DELETE',
+            method: API_CRUD.DELETE,
             url: '/10',
-            headers: {
-                'Content-Type': 'application/json',
-            },
+            headers: API_HEADER,
             body: {
                 "userId": "5",
                 "title": "Food Blog", 
@@ -157,6 +150,5 @@ describe('API test suite', () => {
             expect(requestResponse.body).to.be.empty;   
         });
     });
-    
 });
   
