@@ -3,7 +3,7 @@
 
 ## Introduction to Cypress
 
-Cypress is the framwork used for this assignment. I've provided some helpful documentation below: 
+Cypress is the framework used for this assignment. I've provided some helpful documentation below: 
 
 <https://www.cypress.io/>
 
